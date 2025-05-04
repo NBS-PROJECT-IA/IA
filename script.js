@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('main section');
+    const sections = document.querySelectorAll('main section[id]');
     const navLinks = document.querySelectorAll('nav a');
+    const header = document.querySelector('header');
+    const offset = header ? header.offsetHeight : 100;
 
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+
+    const updateActiveLink = () => {
         let currentSection = '';
 
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
+            const sectionTop = section.offsetTop - offset;
             const sectionHeight = section.offsetHeight;
+
             if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                 currentSection = section.id;
             }
@@ -19,5 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.add('active');
             }
         });
+    };
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
-});
+
+  
