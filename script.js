@@ -35,7 +35,3 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
-
-    // Ejecutar una vez al cargar por si ya está en medio de la página
-    updateActiveLink();
-});
